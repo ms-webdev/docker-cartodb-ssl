@@ -214,16 +214,21 @@ RUN cd / && git clone --recursive https://github.com/CartoDB/observatory-extensi
   git checkout $OBSERVATORY_VERSION && \
   PGUSER=postgres make deploy
 
+# Certbot
+RUN add-apt-repository -y ppa:certbot/certbot && apt-get install -y python-certbot-nginx
+
 # Copy confs
 ADD ./config/CartoDB-dev.js \
       /CartoDB-SQL-API/config/environments/development.js
 ADD ./config/WS-dev.js \
       /Windshaft-cartodb/config/environments/development.js
+# TODO create production.js for SQL and Windshaft
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./create_dev_user /cartodb/script/create_dev_user
 ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
 ADD ./config/cartodb.nginx.proxy.conf /etc/nginx/sites-enabled/default
+ADD ./config/cartodb.nginx.https.proxy.conf /etc/nginx/sites-enabled/https
 ADD ./config/varnish.vcl /etc/varnish.vcl
 ADD ./geocoder.sh /cartodb/script/geocoder.sh
 ADD ./geocoder_server.sql /cartodb/script/geocoder_server.sql

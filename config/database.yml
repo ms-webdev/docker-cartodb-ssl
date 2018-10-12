@@ -4,7 +4,7 @@ production:
   host: localhost
   port: 5432
   direct_port: 5432
-  database: carto_db_production
+  database: carto_db_development
   username: postgres
   password:
   conn_validator_timeout: 900

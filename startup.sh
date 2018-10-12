@@ -2,7 +2,7 @@
 
 export CARTO_HOSTNAME=${CARTO_HOSTNAME:=$HOSTNAME}
 
-perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/development.js
+perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/development.js /etc/nginx/sites-available/https
 
 PGDATA=/var/lib/postgresql
 if [ "$(stat -c %U $PGDATA)" != "postgres" ]; then
@@ -14,6 +14,24 @@ fi
 service postgresql start
 service redis-server start
 /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl
+
+if [ "$HTTPS" == "1" ]; then
+# TODO Configure carto for https
+
+cd /Windshaft-cartodb
+node app.js production &
+
+cd /CartoDB-SQL-API
+node app.js production &
+
+if [ "$LETSENCRYPT_EMAIL" != "" ]; then
+# Request cert
+certbot certonly --standalone --preferred-challenges tls-sni -d $CARTO_HOSTNAME --email $LETSENCRYPT_EMAIL --agree-tos 
+# TODO test it
+# TODO Config nginx
+service nginx start
+fi
+else
 service nginx start
 
 cd /Windshaft-cartodb
@@ -21,6 +39,7 @@ node app.js development &
 
 cd /CartoDB-SQL-API
 node app.js development &
+fi
 
 cd /cartodb
 bundle exec script/restore_redis

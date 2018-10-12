@@ -48,6 +48,38 @@ Instead of setting hostname with `-h` you can also use the `CARTO_HOSTNAME` envi
 docker run -d -p 80:80 -e CARTO_HOSTNAME=<hostname> sverhoeven/cartodb
 ```
 
+HTTPS encryption
+----------------
+
+By default the Docker container runs unencrypted on port 80 and redirects to itself on port 80.
+
+There are 2 ways to enable https encryption:
+
+1. Use loadbalancer or reverse proxy to map https to http
+2. Use embedded NGINX web server to perform encryption with automatic [Let's encrypt](https://letsencrypt.org/) certificate [deployment](https://certbot.eff.org/).
+
+### 1. With load balancer or reverse proxy
+
+Run container with
+```bash
+docker run -d -p 80:80 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 sverhoeven/cartodb
+```
+
+Configure load balancer or reverse proxy to accept traffic on https://<hostname>:443 and forward it to port 80 of the Docker container.
+
+### 2. With automatic deployment
+
+Run container with
+```bash
+docker run -d -p 443:443 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 -e LETSENCRYPT_EMAIL=<email adress> sverhoeven/cartodb
+```
+
+The `<email adress>` is used by Certbot as the account to register the domain at Let's Encrypt.
+
+Let's encrypt has a [rate limit](https://letsencrypt.org/docs/rate-limits/) of a few generated certificates per domain per month, so you cannot just generate new certificates every time the container is restarted. So you should keep the generated certificates by mounting `/etc/letsencrypt`.
+
+A cron job will try to renew the certificate each week.
+
 Persistent data
 ---------------
 
