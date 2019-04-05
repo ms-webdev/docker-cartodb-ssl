@@ -126,9 +126,9 @@ RUN cd /opt && \
     rm -rf varnish-3.0.7 varnish-3.0.7.tgz
 
 # Install NodeJS
-RUN curl https://nodejs.org/download/release/v6.9.2/node-v6.9.2-linux-x64.tar.gz| tar -zxf - --strip-components=1 -C /usr && \
+RUN curl https://nodejs.org/download/release/latest-v10.x/node-v10.15.3-linux-x64.tar.gz| tar -zxf - --strip-components=1 -C /usr && \
   npm install -g grunt-cli && \
-  npm install -g npm@3.10.9 && \
+  npm install -g npm && \
   rm -r /tmp/npm-* /root/.npm
 
 # Setting PostgreSQL
@@ -170,7 +170,7 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     git checkout $WINDSHAFT_VERSION && \
     npm install -g yarn@0.27.5 && \
     yarn install && \
-    rm -r /tmp/npm-* /root/.npm && \
+    #rm -r /tmp/npm-* /root/.npm && \
     mkdir logs
 
 # Install CartoDB
