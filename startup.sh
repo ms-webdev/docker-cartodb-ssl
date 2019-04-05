@@ -19,7 +19,10 @@ service redis-server start
 if [ "$HTTPS" == "1" ]; then
 # TODO Configure carto for https
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/cartodb_openssl.key -out /etc/ssl/cartodb_openssl.crt
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+    -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
+    -keyout /etc/ssl/cartodb.key  -out /etc/ssl/cartodb.crt
 
 cd /Windshaft-cartodb
 node app.js production &
@@ -32,11 +35,9 @@ if [ "$LETSENCRYPT_EMAIL" != "" ]; then
 certbot certonly --standalone --preferred-challenges tls-sni -d $CARTO_HOSTNAME --email $LETSENCRYPT_EMAIL --agree-tos 
 # TODO test it
 # TODO Config nginx
-service nginx start
 fi
 else
 rm /etc/nginx/sites-enabled/https
-service nginx start
 
 cd /Windshaft-cartodb
 node app.js development &
@@ -44,6 +45,8 @@ node app.js development &
 cd /CartoDB-SQL-API
 node app.js development &
 fi
+
+service nginx start
 
 cd /cartodb
 bundle exec script/restore_redis
