@@ -33,6 +33,7 @@ certbot certonly --standalone --preferred-challenges tls-sni -d $CARTO_HOSTNAME 
 service nginx start
 fi
 else
+rm /etc/nginx/sites-enabled/https
 service nginx start
 
 cd /Windshaft-cartodb
