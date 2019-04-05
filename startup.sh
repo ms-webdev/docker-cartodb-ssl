@@ -19,6 +19,8 @@ service redis-server start
 if [ "$HTTPS" == "1" ]; then
 # TODO Configure carto for https
 
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+
 cd /Windshaft-cartodb
 node app.js production &
 
