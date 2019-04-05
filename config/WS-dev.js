@@ -35,7 +35,7 @@ var config = {
     //  3. {{=it.port}}: will use the `port` from this very same configuration file.
     ,resources_url_templates: {
         http: 'http://cartodb.localhost/user/{{=it.user}}/api/v1/map',
-        https: 'http://cartodb.localhost/user/{{=it.user}}/api/v1/map'
+        https: 'https://cartodb.localhost/user/{{=it.user}}/api/v1/map'
     }
 
     // Maximum number of connections for one process
