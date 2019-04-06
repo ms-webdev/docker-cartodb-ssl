@@ -54,7 +54,7 @@ bundle exec script/resque > resque.log 2>&1 &
 script/sync_tables_trigger.sh &
 
 # Recreate api keys in db and redis, so sql api is authenticated
-echo 'delete from api_keys' | psql -U postgres -t carto_db_development
+echo 'delete from api_keys' | psql -U postgres -t carto_db_production
 bundle exec rake carto:api_key:create_default
 
 # bundle exec rake carto:api_key:create_default

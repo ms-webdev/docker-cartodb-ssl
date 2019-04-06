@@ -59,7 +59,7 @@ var config = {
     ,log_filename: undefined
     // Templated database username for authorized user
     // Supported labels: 'user_id' (read from redis)
-    ,postgres_auth_user: 'development_cartodb_user_<%= user_id %>'
+    ,postgres_auth_user: 'production_cartodb_user_<%= user_id %>'
     // Templated database password for authorized user
     // Supported labels: 'user_id', 'user_password' (both read from redis)
     ,postgres_auth_pass: '<%= user_password %>'

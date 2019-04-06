@@ -9,7 +9,7 @@ docker run -d -p 443:443 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 --name cartodb 
 ```
 ## Letsencrypt
 ```bash
-docker run -d -p 443:443 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 -e LETSENCRYPT_EMAIL=<email adress> --name cartodb mswebdev/cartodb
+docker run -d -p 443:443 -p 80:80 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 -e LETSENCRYPT_EMAIL=<email adress> --name cartodb mswebdev/cartodb
 ```
 
 

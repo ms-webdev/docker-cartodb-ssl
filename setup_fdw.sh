@@ -1,13 +1,13 @@
 # Create foreign data wrapper to another postgresql database
 #
-ORGANIZATION_DB=`echo "SELECT database_name FROM users WHERE username='admin4example'" | psql -U postgres -t carto_db_development`
+ORGANIZATION_DB=`echo "SELECT database_name FROM users WHERE username='admin4example'" | psql -U postgres -t carto_db_production`
 
 echo "CREATE EXTENSION postgres_fdw;" | psql -U postgres $ORGANIZATION_DB
 echo "CREATE SCHEMA gps;" | psql -U postgres $ORGANIZATION_DB
 echo "CREATE SERVER remotedb FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '10.0.0.1', port '5432', dbname 'somedb');" | psql -U postgres $ORGANIZATION_DB
 echo "CREATE FOREIGN TABLE gps.places (id integer NOT NULL, location geometry) SERVER remotedb OPTIONS (schema_name 'gps', table_name 'places');"
 
-for user in `echo "SELECT 'development_cartodb_user_' || id FROM users WHERE organization_id = (SELECT id FROM organizations WHERE name='example')" | psql -U postgres -t carto_db_development`
+for user in `echo "SELECT 'production_cartodb_user_' || id FROM users WHERE organization_id = (SELECT id FROM organizations WHERE name='example')" | psql -U postgres -t carto_db_production`
 do
   echo "GRANT USAGE ON SCHEMA gps TO ${user};" | psql -U postgres $ORGANIZATION_DB
   echo "GRANT SELECT ON gps.places TO ${user};" | psql -U postgres $ORGANIZATION_DB

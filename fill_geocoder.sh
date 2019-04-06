@@ -4,7 +4,7 @@
 # Not run during Docker build phase as it would make the image too big
 cd /data-services/geocoder
 ./geocoder_download_dumps
-GEOCODER_DB=`echo "SELECT database_name FROM users WHERE username='geocoder'" | psql -U postgres -t carto_db_development`
+GEOCODER_DB=`echo "SELECT database_name FROM users WHERE username='geocoder'" | psql -U postgres -t carto_db_production`
 ./geocoder_restore_dump postgres $GEOCODER_DB db_dumps/*.sql
 rm -r db_dumps
 chmod +x geocoder_download_patches.sh geocoder_apply_patches.sh

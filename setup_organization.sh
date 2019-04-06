@@ -10,8 +10,8 @@ bundle exec rake cartodb:db:set_organization_quota[$ORGANIZATION_NAME,5000]
 bundle exec rake cartodb:db:configure_geocoder_extension_for_organizations[$ORGANIZATION_NAME]
 
 # Enable sync tables
-echo "UPDATE users SET sync_tables_enabled=true WHERE username='${USERNAME}'" | psql -U postgres -t carto_db_development
+echo "UPDATE users SET sync_tables_enabled=true WHERE username='${USERNAME}'" | psql -U postgres -t carto_db_production
 # Enable private maps
-echo "UPDATE users SET private_maps_enabled = 't'" | psql -U postgres -t carto_db_development
+echo "UPDATE users SET private_maps_enabled = 't'" | psql -U postgres -t carto_db_production
 
 bundle exec rake cartodb:features:enable_feature_for_all_users["new_dashboard"]
