@@ -175,7 +175,6 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
-ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
 RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
     git checkout $CARTODB_VERSION && \
@@ -186,8 +185,10 @@ RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
       /tmp/cartodb_pgsql.sh && service postgresql stop && \
     cd - && \
     npm install && \
-    rm -r /tmp/npm-* /root/.npm && \
-    perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
+    rm -r /tmp/npm-* /root/.npm
+
+ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
+RUN perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
     pip install --no-binary :all: -r python_requirements.txt && \
     gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
     #gem install bundler bundle compass archive-tar-minitar rack && \
