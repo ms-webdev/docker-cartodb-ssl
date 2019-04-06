@@ -12,7 +12,7 @@ ENV CARTODB_PSQL=master
 # OS Cleanup
 RUN apt-get clean && apt-get update
 
-# System Locales + Build essentials
+# Build essentials + System Locales
 # [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#system-locales]
 RUN apt-get install -y -q apt-utils software-properties-common locales make pkg-config && \
     dpkg-reconfigure locales && \
@@ -48,3 +48,8 @@ RUN apt-get install -y -q postgis && \
     psql -U postgres template_postgis -c 'CREATE EXTENSION postgis;CREATE EXTENSION postgis_topology;' && \
     service postgresql stop && \
     ldconfig
+
+# Redis
+RUN add-apt-repository ppa:cartodb/redis-next && apt-get update && \
+    apt-get install redis
+
