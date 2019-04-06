@@ -175,6 +175,7 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
+ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
 RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
     git checkout $CARTODB_VERSION && \
@@ -192,7 +193,7 @@ RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     #gem install bundler bundle compass archive-tar-minitar rack && \
     bundle update thin && \
     /bin/bash -l -c 'bundle install' && \
-    cp config/grunt_development.json ./config/grunt_true.json && \
+    cp config/grunt_production.json ./config/grunt_true.json && \
     /bin/bash -l -c 'bundle exec grunt'
     # && \
     #rm -rf .git /root/.cache/pip node_modules
