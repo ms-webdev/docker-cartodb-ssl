@@ -177,29 +177,41 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
-RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
+
+RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
-    git checkout $CARTODB_VERSION && \
-    # Install cartodb extension
+    apt-get install -y -q python-pip && \
+    CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal pip install --no-binary :all: -r python_requirements.txt && \
     cd lib/sql && \
     PGUSER=postgres make install && \
     service postgresql start && /bin/su postgres -c \
-      /tmp/cartodb_pgsql.sh && service postgresql stop && \
+    /tmp/cartodb_pgsql.sh && service postgresql stop && \
     cd - && \
-    npm install
-ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
-RUN cd cartodb && \
-    rm -r /tmp/npm-* /root/.npm && \
-    perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
-    pip install --no-binary :all: -r python_requirements.txt && \
-    gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
-    #gem install bundler bundle compass archive-tar-minitar rack && \
-    bundle update thin && \
-    /bin/bash -l -c 'bundle install' && \
-    #cp config/grunt_development.json ./config/grunt_true.json && \
-    /bin/bash -l -c 'bundle exec grunt --environment=production'
-    # && \
-    #rm -rf .git /root/.cache/pip node_modules
+    npm install && \
+    npm run carto-node && npm run build:static && \
+
+
+
+
+#RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
+#    cd cartodb && \
+#    git checkout $CARTODB_VERSION && \
+#    cd lib/sql && \
+#    PGUSER=postgres make install && \
+#    service postgresql start && /bin/su postgres -c \
+#      /tmp/cartodb_pgsql.sh && service postgresql stop && \
+#    cd - && \
+#    npm install
+#ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
+#RUN cd cartodb && \
+#    rm -r /tmp/npm-* /root/.npm && \
+#    perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
+#    pip install --no-binary :all: -r python_requirements.txt && \
+#    gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
+#    bundle update thin && \
+#    /bin/bash -l -c 'bundle install' && \
+#    /bin/bash -l -c 'bundle exec grunt --environment=production'
+
 
 # Geocoder SQL client + server
 RUN git clone https://github.com/CartoDB/data-services.git && \
