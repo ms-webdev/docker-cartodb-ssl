@@ -252,7 +252,7 @@ RUN mkdir -p /cartodb/log && touch /cartodb/log/users_modifications && \
     perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf && \
     service postgresql start && service redis-server start && \
     perl -pi -e 's/0\.22\.0/0.22.2/' /cartodb/app/models/user/db_service.rb && \
-	bash -l -c "cd /cartodb && bash script/create_dev_user && \
+	bash -l -c "cd /cartodb && bash script/create_dev_user" && \
     bash script/setup_organization.sh && bash script/geocoder.sh" && \
 	service postgresql stop && service redis-server stop && \
     chmod +x /cartodb/script/fill_geocoder.sh && \
