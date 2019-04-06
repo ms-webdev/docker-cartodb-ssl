@@ -33,6 +33,8 @@ ENV DATAERVICESAPI_VERSION=master
 ENV OBSERVATORY_VERSION=master
 
 RUN useradd -m -d /home/cartodb -s /bin/bash cartodb && \
+  apt-add-repository ppa:brightbox/ruby-ng && apt-get update && \
+  add-apt-repository ppa:cartodb/redis-next && apt-get update && \
   apt-get install -y -q \
     build-essential \
     autoconf \
@@ -66,7 +68,7 @@ RUN useradd -m -d /home/cartodb -s /bin/bash cartodb && \
     postgis \
     liblwgeom-2.4-0 \
     ca-certificates \
-    redis-server \
+    redis \
     python2.7-dev \
     python-setuptools \
     imagemagick \
@@ -108,12 +110,16 @@ RUN useradd -m -d /home/cartodb -s /bin/bash cartodb && \
     wget \
     nginx-light \
     net-tools \
-    ruby2.5-dev \
+    ruby2.4 \
+    ruby2.4-dev \
+    ruby-bundler \
   --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
 
 RUN git config --global user.email you@example.com
 RUN git config --global user.name "Your Name"
+
+RUN gem install compass
 
 # Varnish 3, Ubuntu:18.04 comes with Varnish 5.1 which can't be run with anonymous admin telnet
 RUN cd /opt && \
@@ -246,8 +252,6 @@ ADD ./fill_geocoder.sh /cartodb/script/fill_geocoder.sh
 ADD ./sync_tables_trigger.sh /cartodb/script/sync_tables_trigger.sh
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN mkdir -p /cartodb/log && touch /cartodb/log/users_modifications && \
-    apt-add-repository ppa:brightbox/ruby-ng && apt-get update && \
-    apt-get install -y -q ruby2.4 ruby2.4-dev ruby-bundler && gem install compass && \
     /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl && \
     perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf && \
     service postgresql start && service redis-server start && \
