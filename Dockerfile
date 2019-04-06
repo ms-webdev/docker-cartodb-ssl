@@ -247,8 +247,7 @@ ADD ./sync_tables_trigger.sh /cartodb/script/sync_tables_trigger.sh
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN mkdir -p /cartodb/log && touch /cartodb/log/users_modifications && \
     apt-add-repository ppa:brightbox/ruby-ng && apt-get update && \
-    apt-get install ruby2.4 ruby2.4-dev && \
-    apt-get install -y -q ruby-bundler && gem install compass && \
+    apt-get install -y -q ruby2.4 ruby2.4-dev ruby-bundler && gem install compass && \
     /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl && \
     perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf && \
     service postgresql start && service redis-server start && \
