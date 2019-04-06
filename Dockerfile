@@ -61,3 +61,13 @@ RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
     cd CartoDB-SQL-API && \
     npm install && \
     npm audit fix
+
+# MAPS API [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#maps-api]
+RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
+    cd Windshaft-cartodb && \
+    npm install && \
+    npm audit fix && \
+    mkdir logs
+
+# Configs
+# ADD SQL API + MAPS API
