@@ -184,7 +184,9 @@ RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     service postgresql start && /bin/su postgres -c \
       /tmp/cartodb_pgsql.sh && service postgresql stop && \
     cd - && \
-    npm install && \
+    npm install
+ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
+RUN cd cartodb && \
     rm -r /tmp/npm-* /root/.npm && \
     perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
     pip install --no-binary :all: -r python_requirements.txt && \
