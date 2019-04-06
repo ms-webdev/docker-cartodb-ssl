@@ -177,7 +177,6 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
-
 RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
     CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal pip install --no-binary :all: -r python_requirements.txt && \
@@ -187,10 +186,7 @@ RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     /tmp/cartodb_pgsql.sh && service postgresql stop && \
     cd - && \
     npm install && \
-    npm run carto-node && npm run build:static && \
-
-
-
+    npm run carto-node && npm run build:static
 
 #RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
 #    cd cartodb && \
