@@ -7,7 +7,6 @@ LABEL maintainer="Marco Schwochow <m.schwochow@gmx.net>"
 
 # ENVs
 ENV RAILS_ENV production
-ENV CARTODB_PSQL=master
 
 # OS Cleanup
 RUN apt-get clean && apt-get update
@@ -34,7 +33,6 @@ RUN add-apt-repository ppa:cartodb/postgresql-10 && apt-get update && \
     service postgresql stop && \
     git clone https://github.com/CartoDB/cartodb-postgresql.git && \
     cd cartodb-postgresql && \
-    git checkout $CARTODB_PSQL && \
     make all install
 
 # GIS dependencies [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#gis-dependencies]
@@ -57,3 +55,7 @@ RUN add-apt-repository ppa:cartodb/redis-next && apt-get update && \
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
     apt-get install -y -q nodejs
 
+# SQL API [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#sql-api]
+RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
+    cd CartoDB-SQL-API && \
+    npm install
