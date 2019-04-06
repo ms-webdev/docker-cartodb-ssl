@@ -21,7 +21,7 @@ if [ "$HTTPS" == "1" ]; then
 
 # openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/cartodb_openssl.key -out /etc/ssl/cartodb_openssl.crt
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
+    -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=$CARTO_HOSTNAME" \
     -keyout /etc/ssl/cartodb.key  -out /etc/ssl/cartodb.crt
 
 cd /Windshaft-cartodb
