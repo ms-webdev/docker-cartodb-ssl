@@ -14,7 +14,7 @@ RUN apt-get clean && apt-get update
 
 # Build essentials + System Locales
 # [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#system-locales]
-RUN apt-get install -y -q apt-utils software-properties-common locales make pkg-config && \
+RUN apt-get install -y -q apt-utils software-properties-common locales make pkg-config curl && \
     dpkg-reconfigure locales && \
     locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
