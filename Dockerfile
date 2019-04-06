@@ -60,12 +60,14 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
 RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
     cd CartoDB-SQL-API && \
     npm install && \
+    # wrong node version or stupid devs, i dont know
     npm audit fix
 
 # MAPS API [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#maps-api]
 RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     cd Windshaft-cartodb && \
     npm install && \
+    # wrong node version or stupid devs, i dont know
     npm audit fix && \
     mkdir logs
 
