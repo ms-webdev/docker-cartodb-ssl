@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export RAILS_ENV=production
 export CARTO_HOSTNAME=${CARTO_HOSTNAME:=$HOSTNAME}
 
 #perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/development.js /etc/nginx/sites-available/https

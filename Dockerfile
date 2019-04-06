@@ -163,6 +163,7 @@ RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
     cd CartoDB-SQL-API && \
     git checkout $SQLAPI_VERSION && \
     npm install && \
+    npm audit fix && \
     rm -r /tmp/npm-* /root/.npm
 
 # Install Windshaft
@@ -171,6 +172,7 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     git checkout $WINDSHAFT_VERSION && \
     npm install -g yarn@0.27.5 && \
     yarn install && \
+    npm audit fix && \
     #rm -r /tmp/npm-* /root/.npm && \
     mkdir logs
 
@@ -223,9 +225,9 @@ RUN add-apt-repository -y ppa:certbot/certbot && apt-get install -y python-certb
 
 # Copy confs
 ADD ./config/CartoDB-dev.js \
-      /CartoDB-SQL-API/config/environments/development.js
+      /CartoDB-SQL-API/config/environments/production.js
 ADD ./config/WS-dev.js \
-      /Windshaft-cartodb/config/environments/development.js
+      /Windshaft-cartodb/config/environments/production.js
 # TODO create production.js for SQL and Windshaft
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
