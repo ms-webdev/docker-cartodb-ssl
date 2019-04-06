@@ -51,5 +51,5 @@ RUN apt-get install -y -q postgis && \
 
 # Redis
 RUN add-apt-repository ppa:cartodb/redis-next && apt-get update && \
-    apt-get install redis
+    apt-get install -y -q redis
 
