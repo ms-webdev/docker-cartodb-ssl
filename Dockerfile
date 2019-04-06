@@ -35,3 +35,7 @@ RUN add-apt-repository ppa:cartodb/postgresql-10 && apt-get update && \
     cd cartodb-postgresql && \
     git checkout $CARTODB_PSQL && \
     make all install
+
+# GIS
+RUN add-apt-repository ppa:cartodb/gis && apt-get update && \
+    apt-get install -y -q gdal-bin libgdal-dev
