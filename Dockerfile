@@ -53,9 +53,11 @@ RUN add-apt-repository ppa:cartodb/redis-next && apt-get update && \
 
 # Node.js [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#nodejs]
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
-    apt-get install -y -q nodejs
+    apt-get install -y -q nodejs && \
+    node -v && npm -v
 
 # SQL API [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#sql-api]
 RUN git clone git://github.com/CartoDB/CartoDB-SQL-API.git && \
     cd CartoDB-SQL-API && \
-    npm install
+    npm install && \
+    npm audit fix
