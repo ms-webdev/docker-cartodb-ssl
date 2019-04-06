@@ -5,6 +5,7 @@ FROM ubuntu:18.04
 LABEL maintainer="Stefan Verhoeven <s.verhoeven@esciencecenter.nl>"
 
 # Configuring locales
+ENV RAILS_ENV production
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y -q apt-utils software-properties-common locales && dpkg-reconfigure locales && \
       locale-gen en_US.UTF-8 && \
@@ -174,7 +175,6 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
-ENV RAILS_ENV production
 RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
     git checkout $CARTODB_VERSION && \

@@ -1,5 +1,5 @@
 var config = {
-     environment: 'development'
+     environment: 'production'
     ,port: 8181
     ,host: '0.0.0.0'
     // Size of the threadpool which can be used to run user code and get notified in the loop thread

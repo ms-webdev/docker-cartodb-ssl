@@ -16,7 +16,7 @@ module.exports.node_port    = 8080;
 module.exports.node_host    = '0.0.0.0';
 // idle socket timeout, in miliseconds
 module.exports.node_socket_timeout    = 600000;
-module.exports.environment  = 'development';
+module.exports.environment  = 'production';
 module.exports.db_base_name = 'cartodb_dev_user_<%= user_id %>_db';
 // Supported labels: 'user_id' (read from redis)
 module.exports.db_user      = 'development_cartodb_user_<%= user_id %>';
