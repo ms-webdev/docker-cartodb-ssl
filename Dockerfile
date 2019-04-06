@@ -47,4 +47,3 @@ RUN apt-get install -y -q postgis && \
     psql -U postgres template_postgis -c 'CREATE EXTENSION postgis;CREATE EXTENSION postgis_topology;' && \
     service postgresql stop && \
     ldconfig && \
-    PGUSER=postgres make installcheck
