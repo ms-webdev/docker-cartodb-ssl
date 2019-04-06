@@ -18,10 +18,10 @@ RUN apt-get install -y -q apt-utils software-properties-common locales make pkg-
     locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
-# GIT
+# GIT [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#git]
 RUN apt-get install -y -q git
 
-# PostgreSQL
+# PostgreSQL [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#postgresql]
 RUN add-apt-repository ppa:cartodb/postgresql-10 && apt-get update && \
     apt-get install -y -q postgresql-10 \
         postgresql-plpython-10 \
@@ -36,6 +36,13 @@ RUN add-apt-repository ppa:cartodb/postgresql-10 && apt-get update && \
     git checkout $CARTODB_PSQL && \
     make all install
 
-# GIS
+# GIS dependencies [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#gis-dependencies]
 RUN add-apt-repository ppa:cartodb/gis && apt-get update && \
     apt-get install -y -q gdal-bin libgdal-dev
+
+# PostGIS [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#postgis]
+RUN apt-get install -y -q postgis && \
+    createdb -T template0 -O postgres -U postgres -E UTF8 template_postgis
+    psql -U postgres template_postgis -c 'CREATE EXTENSION postgis;CREATE EXTENSION postgis_topology;'
+    ldconfig && \
+    PGUSER=postgres make installcheck
