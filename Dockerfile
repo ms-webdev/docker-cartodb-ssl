@@ -177,35 +177,35 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     mkdir logs
 
 # Install CartoDB
-RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
-    cd cartodb && \
-    CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal pip install --no-binary :all: -r python_requirements.txt && \
-    cd lib/sql && \
-    PGUSER=postgres make install && \
-    service postgresql start && /bin/su postgres -c \
-    /tmp/cartodb_pgsql.sh && service postgresql stop && \
-    cd - && \
-    npm install && \
-    npm run carto-node && npm run build:static
-
-#RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
+#RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
 #    cd cartodb && \
-#    git checkout $CARTODB_VERSION && \
+#    CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal pip install --no-binary :all: -r python_requirements.txt && \
 #    cd lib/sql && \
 #    PGUSER=postgres make install && \
 #    service postgresql start && /bin/su postgres -c \
-#      /tmp/cartodb_pgsql.sh && service postgresql stop && \
+#    /tmp/cartodb_pgsql.sh && service postgresql stop && \
 #    cd - && \
-#    npm install
-#ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
-#RUN cd cartodb && \
-#    rm -r /tmp/npm-* /root/.npm && \
-#    perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
-#    pip install --no-binary :all: -r python_requirements.txt && \
-#    gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
-#    bundle update thin && \
-#    /bin/bash -l -c 'bundle install' && \
-#    /bin/bash -l -c 'bundle exec grunt --environment=production'
+#    npm install && \
+#    npm run carto-node && npm run build:static
+
+RUN git clone --recursive git://github.com/CartoDB/cartodb.git && \
+    cd cartodb && \
+    git checkout $CARTODB_VERSION && \
+    cd lib/sql && \
+    PGUSER=postgres make install && \
+    service postgresql start && /bin/su postgres -c \
+      /tmp/cartodb_pgsql.sh && service postgresql stop && \
+    cd - && \
+    npm install
+ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
+RUN cd cartodb && \
+    rm -r /tmp/npm-* /root/.npm && \
+    perl -pi -e 's/gdal==1\.10\.0/gdal==2.2.2/' python_requirements.txt && \
+    pip install --no-binary :all: -r python_requirements.txt && \
+    gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
+    bundle update thin && \
+    /bin/bash -l -c 'bundle install' && \
+    /bin/bash -l -c 'bundle exec grunt --environment=production'
 
 
 # Geocoder SQL client + server
@@ -246,14 +246,12 @@ ADD ./fill_geocoder.sh /cartodb/script/fill_geocoder.sh
 ADD ./sync_tables_trigger.sh /cartodb/script/sync_tables_trigger.sh
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN mkdir -p /cartodb/log && touch /cartodb/log/users_modifications && \
-    gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
-    # bundle update thin && \
     /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl && \
     perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf && \
     service postgresql start && service redis-server start && \
     perl -pi -e 's/0\.22\.0/0.22.2/' /cartodb/app/models/user/db_service.rb && \
-	#bash -l -c "cd /cartodb && bash script/create_dev_user && \
-    #bash script/setup_organization.sh && bash script/geocoder.sh" && \
+	bash -l -c "cd /cartodb && bash script/create_dev_user && \
+    bash script/setup_organization.sh && bash script/geocoder.sh" && \
 	service postgresql stop && service redis-server stop && \
     chmod +x /cartodb/script/fill_geocoder.sh && \
     chmod +x /cartodb/script/sync_tables_trigger.sh
