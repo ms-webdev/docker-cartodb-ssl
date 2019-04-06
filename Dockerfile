@@ -180,7 +180,6 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
 
 RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     cd cartodb && \
-    apt-get install -y -q python-pip && \
     CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal pip install --no-binary :all: -r python_requirements.txt && \
     cd lib/sql && \
     PGUSER=postgres make install && \
