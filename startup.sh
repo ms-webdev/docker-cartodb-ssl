@@ -1,12 +1,9 @@
 #!/bin/bash
-export RAILS_ENV=production
+
 export CARTO_HOSTNAME=${CARTO_HOSTNAME:=$HOSTNAME}
 
-perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' \
-    /cartodb/config/app_config.yml \
-    /Windshaft-cartodb/config/environments/development.js \
-    /etc/nginx/sites-enabled/default \
-    /etc/nginx/sites-enabled/https
+#perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/development.js /etc/nginx/sites-available/https
+perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/development.js /etc/nginx/sites-enabled/https
 
 PGDATA=/var/lib/postgresql
 if [ "$(stat -c %U $PGDATA)" != "postgres" ]; then
@@ -22,8 +19,9 @@ service redis-server start
 if [ "$HTTPS" == "1" ]; then
 # TODO Configure carto for https
 
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/cartodb_openssl.key -out /etc/ssl/cartodb_openssl.crt
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=$CARTO_HOSTNAME" \
+    -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
     -keyout /etc/ssl/cartodb.key  -out /etc/ssl/cartodb.crt
 
 cd /Windshaft-cartodb
