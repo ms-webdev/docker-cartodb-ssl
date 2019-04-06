@@ -205,7 +205,7 @@ RUN cd cartodb && \
     gem install bundler --version=1.17.3 && gem install compass archive-tar-minitar rack && \
     bundle update thin && \
     /bin/bash -l -c 'bundle install' && \
-    /bin/bash -l -c 'bundle exec grunt release --environment=production'
+    /bin/bash -l -c 'bundle exec grunt build-static'
 
 
 # Geocoder SQL client + server
