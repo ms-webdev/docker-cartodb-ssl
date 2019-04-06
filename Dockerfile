@@ -224,10 +224,8 @@ RUN cd / && git clone --recursive https://github.com/CartoDB/observatory-extensi
 RUN add-apt-repository -y ppa:certbot/certbot && apt-get install -y python-certbot-nginx
 
 # Copy confs
-ADD ./config/cartodb-sql-api.production.js \
-      /CartoDB-SQL-API/config/environments/production.js
-ADD ./config/cartodb-windshaft.production.js \
-      /Windshaft-cartodb/config/environments/production.js
+ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/production.js
+ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environments/production.js
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./create_dev_user /cartodb/script/create_dev_user
