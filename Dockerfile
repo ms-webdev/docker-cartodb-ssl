@@ -14,13 +14,13 @@ RUN apt-get clean && apt-get update && apt-get install -y -q locales && \
     update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 # Build essentials
-RUN apt-get install make pkg-config
+RUN apt-get install -y -q make pkg-config
 
 # GIT
-RUN apt-get install git
+RUN apt-get install -y -q git
 
 # PostgreSQL
 RUN add-apt-repository ppa:cartodb/postgresql-10 && apt-get update && \
-    apt-get install postgresql-10 \
+    apt-get install -y -q postgresql-10 \
         postgresql-plpython-10 \
         postgresql-server-dev-10
