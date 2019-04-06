@@ -49,7 +49,11 @@ RUN apt-get install -y -q postgis && \
     service postgresql stop && \
     ldconfig
 
-# Redis
+# Redis [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#redis]
 RUN add-apt-repository ppa:cartodb/redis-next && apt-get update && \
     apt-get install -y -q redis
+
+# Node.js [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#nodejs]
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+    apt-get install -y -q nodejs
 
