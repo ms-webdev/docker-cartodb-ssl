@@ -46,4 +46,4 @@ RUN apt-get install -y -q postgis && \
     createdb -T template0 -O postgres -U postgres -E UTF8 template_postgis && \
     psql -U postgres template_postgis -c 'CREATE EXTENSION postgis;CREATE EXTENSION postgis_topology;' && \
     service postgresql stop && \
-    ldconfig && \
+    ldconfig
