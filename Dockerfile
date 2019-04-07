@@ -85,7 +85,8 @@ RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal \
         pip install --no-binary :all: -r python_requirements.txt && \
     npm install && \
-    npm run carto-node && npm run build
+ADD ./config/grunt_production.json /cartodb/config/grunt_production.json
+RUN cd cartodb && npm run build
 
 # Configs
 ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/production.js
