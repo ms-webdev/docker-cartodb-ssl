@@ -79,6 +79,10 @@ bundle exec  rake cartodb:db:set_user_account_type["${SUBDOMAIN}",'[DEDICATED]']
 #echo 'delete from api_keys' | psql -U postgres -t carto_db_production
 #bundle exec rake carto:api_key:create_default
 
+# Recreate api keys in db and redis, so sql api is authenticated
+echo 'delete from api_keys' | psql -U postgres -t carto_db_production
+bundle exec rake carto:api_key:create_default
+
 # bundle exec rake carto:api_key:create_default
 #bundle exec rails server
 bundle exec thin start --threaded -p 3000 --threadpool-size 5
