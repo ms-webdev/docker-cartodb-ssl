@@ -97,6 +97,9 @@ ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
+# later to top
+RUN apt-get install -y -q openssl
+
 EXPOSE 80
 
 ADD ./startup.sh /opt/startup.sh
