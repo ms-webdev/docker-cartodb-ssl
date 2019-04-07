@@ -71,5 +71,13 @@ RUN git clone git://github.com/CartoDB/Windshaft-cartodb.git && \
     npm audit fix && \
     mkdir logs
 
+# Ruby [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#ruby]
+
+RUN apt-add-repository ppa:brightbox/ruby-ng && apt-get update && \
+    apt-get install -y -q ruby2.4 ruby2.4-dev ruby-bundler && \
+    gem install compass
+
+# Builder [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#builder]
+
 # Configs
 # ADD SQL API + MAPS API
