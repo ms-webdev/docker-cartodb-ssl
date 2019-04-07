@@ -86,9 +86,16 @@ RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
         pip install --no-binary :all: -r python_requirements.txt && \
     npm install && \
     npm run carto-node && npm run build:static
+RUN cd cartodb && \
+    RAILS_ENV=development bundle exec rake db:create && \
+    RAILS_ENV=development bundle exec rake db:migrate
+    #service postgresql start && \
 
+    #service postgresql stop
 
 
 
 # Configs
 # ADD SQL API + MAPS API
+#cp config/app_config.yml.sample config/app_config.yml
+#cp config/database.yml.sample config/database.yml
