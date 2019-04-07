@@ -170,7 +170,7 @@ defaults: &defaults
     timeout: 5 # socket timeout
     trigger_verbose: true
   redis:
-    host: '0.0.0.0'
+    host: '127.0.0.1'
     port: 6379
     connect_timeout: 2
     read_timeout: 3

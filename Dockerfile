@@ -103,6 +103,8 @@ RUN apt-get install -y -q \
     nginx-light \
     redis-tools
 
+RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
+
 
 # Redis:
 
