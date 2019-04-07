@@ -7,6 +7,7 @@ perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-ena
 
 service postgresql start
 service redis-server start
+redis-cli info
 # /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl
 
 if [ "$HTTPS" == "1" ]; then

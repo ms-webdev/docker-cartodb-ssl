@@ -100,7 +100,11 @@ ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 # later to top
 RUN apt-get install -y -q \
     openssl \
-    nginx-light
+    nginx-light \
+    redis-tools
+
+
+# Redis:
 
 EXPOSE 80
 

@@ -170,7 +170,7 @@ defaults: &defaults
     timeout: 5 # socket timeout
     trigger_verbose: true
   redis:
-    host: '0.0.0.0'
+    host: '127.0.0.1'
     port: 6379
     connect_timeout: 2
     read_timeout: 3
@@ -181,8 +181,8 @@ defaults: &defaults
       users_metadata:      5
       redis_migrator_logs: 6
       limits_metadata:     8
-    secondary:
-       host: '0.0.0.0'
+    # secondary:
+    #   host: '127.0.0.1'
   org_metadata_api:
     host: 'localhost.lan'
     port: '3000'
