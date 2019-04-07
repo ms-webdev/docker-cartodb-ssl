@@ -44,6 +44,18 @@ bundle exec rake db:create
 bundle exec rake db:migrate
 bundle exec rails server
 bundle exec ./script/resque
+
+
+SUBDOMAIN="dev"
+PASSWORD="pass1234"
+ADMIN_PASSWORD="pass1234"
+EMAIL="dev@example.com"
+
+echo "--- Create '${SUBDOMAIN}' user"
+bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
+	PASSWORD="${PASSWORD}" ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
+	EMAIL="${EMAIL}"
+
 #bundle exec script/restore_redis
 #bundle exec script/resque > resque.log 2>&1 &
 #script/sync_tables_trigger.sh &

@@ -8,7 +8,7 @@ ADMIN_PASSWORD="pass1234"
 EMAIL="dev@example.com"
 
 echo "--- Creating databases"
-bundle exec rake cartodb:db:setup
+#bundle exec rake cartodb:db:setup
 
 echo "--- Create '${SUBDOMAIN}' user"
 bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
@@ -32,7 +32,7 @@ echo "--- Setting cartodb account type"
 bundle exec  rake cartodb:db:set_user_account_type["${SUBDOMAIN}",'[DEDICATED]']
 
 # Set dataservices server
-bundle exec  rake cartodb:db:configure_geocoder_extension_for_non_org_users[$SUBDOMAIN]
+#bundle exec  rake cartodb:db:configure_geocoder_extension_for_non_org_users[$SUBDOMAIN]
 
 # Enable sync tables
-echo "UPDATE users SET sync_tables_enabled=true WHERE username='${SUBDOMAIN}'" | psql -U postgres -t carto_db_production
+#echo "UPDATE users SET sync_tables_enabled=true WHERE username='${SUBDOMAIN}'" | psql -U postgres -t carto_db_production
