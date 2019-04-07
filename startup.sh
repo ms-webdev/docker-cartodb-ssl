@@ -3,7 +3,9 @@
 export RAILS_ENV=production
 export CARTO_HOSTNAME=${CARTO_HOSTNAME:=$HOSTNAME}
 
-perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /Windshaft-cartodb/config/environments/production.js /etc/nginx/sites-enabled/https
+perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /etc/nginx/sites-enabled/default /cartodb/config/app_config.yml /etc/nginx/sites-enabled/https
+
+# /Windshaft-cartodb/config/environments/production.js
 
 service postgresql start
 service redis-server start
