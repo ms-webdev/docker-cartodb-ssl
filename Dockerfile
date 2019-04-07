@@ -86,16 +86,20 @@ RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
         pip install --no-binary :all: -r python_requirements.txt && \
     npm install && \
     npm run carto-node && npm run build:static
-RUN cd cartodb && \
-    RAILS_ENV=development bundle exec rake db:create && \
-    RAILS_ENV=development bundle exec rake db:migrate
-    #service postgresql start && \
-
-    #service postgresql stop
-
-
 
 # Configs
-# ADD SQL API + MAPS API
-#cp config/app_config.yml.sample config/app_config.yml
-#cp config/database.yml.sample config/database.yml
+ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/production.js
+ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environments/production.js
+ADD ./config/app_config.yml /cartodb/config/app_config.yml
+ADD ./config/database.yml /cartodb/config/database.yml
+# ADD ./create_dev_user /cartodb/script/create_dev_user
+# ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
+ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
+ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
+
+EXPOSE 443
+
+ADD ./startup.sh /opt/startup.sh
+
+CMD ["/bin/bash", "/opt/startup.sh"]
+HEALTHCHECK CMD curl -f http://localhost || exit 1
