@@ -98,7 +98,9 @@ ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
 # later to top
-RUN apt-get install -y -q openssl
+RUN apt-get install -y -q \
+    openssl \
+    nginx-light
 
 EXPOSE 80
 
