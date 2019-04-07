@@ -78,6 +78,17 @@ RUN apt-add-repository ppa:brightbox/ruby-ng && apt-get update && \
     gem install compass
 
 # Builder [https://github.com/CartoDB/cartodb/blob/master/doc/manual/source/install.rst#builder]
+RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
+    cd cartodb && \
+    apt-get install -y -q python-pip imagemagick unp zip libicu-dev && \
+    RAILS_ENV=development bundle install && \
+    CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal \
+        pip install --no-binary :all: -r python_requirements.txt && \
+    npm install && \
+    npm run carto-node && npm run build:static
+
+
+
 
 # Configs
 # ADD SQL API + MAPS API
