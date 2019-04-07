@@ -43,18 +43,18 @@ cd /cartodb
 bundle exec rake db:create
 bundle exec rake db:migrate
 # bundle exec rails server
-bundle exec ./script/resque
+# bundle exec ./script/resque
 
 
-SUBDOMAIN="dev"
-PASSWORD="pass1234"
-ADMIN_PASSWORD="pass1234"
-EMAIL="dev@example.com"
+#SUBDOMAIN="dev"
+#PASSWORD="pass1234"
+#ADMIN_PASSWORD="pass1234"
+#EMAIL="dev@example.com"
 
-echo "--- Create '${SUBDOMAIN}' user"
-bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
-	PASSWORD="${PASSWORD}" ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
-	EMAIL="${EMAIL}"
+#echo "--- Create '${SUBDOMAIN}' user"
+#bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
+#	PASSWORD="${PASSWORD}" ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
+#	EMAIL="${EMAIL}"
 
 #bundle exec script/restore_redis
 #bundle exec script/resque > resque.log 2>&1 &
@@ -65,5 +65,5 @@ bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
 #bundle exec rake carto:api_key:create_default
 
 # bundle exec rake carto:api_key:create_default
-bundle exec rails server
-# bundle exec thin start --threaded -p 3000 --threadpool-size 5
+#bundle exec rails server
+bundle exec thin start --threaded -p 3000 --threadpool-size 5
