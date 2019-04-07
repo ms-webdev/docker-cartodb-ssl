@@ -65,4 +65,5 @@ bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
 #bundle exec rake carto:api_key:create_default
 
 # bundle exec rake carto:api_key:create_default
-bundle exec thin start --threaded -p 3000 --threadpool-size 5
+bundle exec rails server
+# bundle exec thin start --threaded -p 3000 --threadpool-size 5
