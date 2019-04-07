@@ -85,7 +85,7 @@ RUN git clone --recursive https://github.com/CartoDB/cartodb.git && \
     CPLUS_INCLUDE_PATH=/usr/include/gdal C_INCLUDE_PATH=/usr/include/gdal PATH=$PATH:/usr/include/gdal \
         pip install --no-binary :all: -r python_requirements.txt && \
     npm install && \
-    npm run carto-node && npm run build:static
+    npm run carto-node && npm run build
 
 # Configs
 ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/production.js
@@ -97,16 +97,14 @@ ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
-# later to top
+# Server + Tools
 RUN apt-get install -y -q \
     openssl \
     nginx-light \
     redis-tools
 
+# Redis: Docker Fix
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
-
-
-# Redis:
 
 EXPOSE 80
 
