@@ -3,6 +3,7 @@
 - Map/Data: wrong host (cartodb.localhost)
 - Install Mailer
 - Log(s!) Monitoring
+- Avatar Upload (chmod?)
 
 ## Init Instance
 ```bash
