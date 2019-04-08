@@ -111,7 +111,9 @@ RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
 # Create User
-RUN bash -l -c "cd /cartodb && bash script/create_prod_user"
+RUN service postgresql start && service redis-server start && \
+    bash -l -c "cd /cartodb && bash script/create_prod_user" && \
+    service postgresql stop && service redis-server stop
 
 EXPOSE 80
 
