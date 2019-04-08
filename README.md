@@ -7,6 +7,7 @@ EXPERIMENTAL - currently in development
 - Log(s!) Monitoring
 - Avatar Upload (chmod?)
 - Add full dataservice support
+- install dismissed Label Fonts 
 
 ## Init Instance
 ```bash
