@@ -93,8 +93,7 @@ ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/
 ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environments/production.js
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
-ADD ./create_prod_user /cartodb/script/create_prod_user
-ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
+ADD ./setup_admin.sh /cartodb/script/setup_admin.sh
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
@@ -129,7 +128,7 @@ RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 RUN service postgresql start && service redis-server start && \
     cd cartodb && \
     bundle exec rake db:create && bundle exec rake db:migrate && \
-    bash -l -c "cd /cartodb && bash script/create_prod_user && bash script/setup_organization.sh" && \
+    bash -l -c "cd /cartodb && bash script/setup_admin.sh" && \
     service postgresql stop && service redis-server stop
 
 EXPOSE 80
