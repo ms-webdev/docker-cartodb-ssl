@@ -117,8 +117,10 @@ RUN git clone https://github.com/CartoDB/dataservices-api.git && \
     cd - && \
     cd server/extension && sudo make install
 RUN cd server/lib/python/cartodb_services && pip install -r requirements.txt && pip install . --upgrade
-RUN psql -U postgres -c "CREATE DATABASE dataservices_db ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" && \
-    psql -U postgres -c "CREATE USER geocoder_api;"
+RUN service postgresql start && service redis-server start && \
+    psql -U postgres -c "CREATE DATABASE dataservices_db ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" && \
+    psql -U postgres -c "CREATE USER geocoder_api;" && \
+    service postgresql stop && service redis-server stop
 
 # Init Database & Create Admin
 RUN service postgresql start && service redis-server start && \
