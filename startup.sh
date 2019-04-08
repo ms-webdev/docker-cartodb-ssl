@@ -47,32 +47,6 @@ bundle exec rake db:migrate
 # bundle exec rails server
 bundle exec script/resque > resque.log 2>&1 &
 
-
-SUBDOMAIN="dev"
-PASSWORD="pass1234"
-ADMIN_PASSWORD="pass1234"
-EMAIL="dev@example.com"
-
-echo "--- Create '${SUBDOMAIN}' user"
-bundle exec  rake cartodb:db:create_user --trace SUBDOMAIN="${SUBDOMAIN}" \
-	PASSWORD="${PASSWORD}" ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
-	EMAIL="${EMAIL}"
-# # Update your quota to 100GB
-echo "--- Updating quota to 100GB"
-bundle exec  rake cartodb:db:set_user_quota["${SUBDOMAIN}",102400]
-
-# # Allow unlimited tables to be created
-echo "--- Allowing unlimited tables creation"
-bundle exec  rake cartodb:db:set_unlimited_table_quota["${SUBDOMAIN}"]
-
-# # Allow user to create private tables in addition to public
-echo "--- Allowing private tables creation"
-bundle exec  rake cartodb:db:set_user_private_tables_enabled["${SUBDOMAIN}",'true']
-
-# # Set the account type
-echo "--- Setting cartodb account type"
-bundle exec  rake cartodb:db:set_user_account_type["${SUBDOMAIN}",'[DEDICATED]']
-
 #bundle exec script/restore_redis
 #bundle exec script/resque > resque.log 2>&1 &
 #script/sync_tables_trigger.sh &

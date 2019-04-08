@@ -93,7 +93,7 @@ ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/
 ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environments/production.js
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
-# ADD ./create_dev_user /cartodb/script/create_dev_user
+ADD ./create_dev_user /cartodb/script/create_prod_user
 # ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
@@ -103,11 +103,15 @@ RUN apt-get install -y -q \
     openssl \
     nginx-light \
     redis-tools \
-    nano
+    nano \
+    htop
 
 # Redis: change configs
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
+
+# Create User
+RUN bash -l -c "cd /cartodb && bash script/create_prod_user && \
 
 EXPOSE 80
 
