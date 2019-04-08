@@ -4,6 +4,7 @@
 - Install Mailer
 - Log(s!) Monitoring
 - Avatar Upload (chmod?)
+- Add full dataservice support
 
 ## Init Instance
 ```bash
