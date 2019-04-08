@@ -102,7 +102,8 @@ ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 RUN apt-get install -y -q \
     openssl \
     nginx-light \
-    redis-tools
+    redis-tools \
+    nano
 
 # Redis: Docker Fix
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
