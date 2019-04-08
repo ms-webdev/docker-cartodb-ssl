@@ -3,11 +3,12 @@
 export RAILS_ENV=production
 export CARTO_HOSTNAME=${CARTO_HOSTNAME:=$HOSTNAME}
 
+# hostname injects
 perl -pi -e 's/cartodb\.localhost/$ENV{"CARTO_HOSTNAME"}/g' /cartodb/config/app_config.yml /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/https
 
+# start services
 service postgresql start
 service redis-server start
-redis-cli info
 # /opt/varnish/sbin/varnishd -a :6081 -T localhost:6082 -s malloc,256m -f /etc/varnish.vcl
 
 if [ "$HTTPS" == "1" ]; then
@@ -35,6 +36,7 @@ cd /CartoDB-SQL-API
 node app.js development &
 fi
 
+# start nginx
 service nginx start
 
 cd /cartodb
@@ -48,4 +50,3 @@ bundle exec rake carto:api_key:create_default
 
 # Run Server
 bundle exec rails server
-#bundle exec thin start --threaded -p 3000 --threadpool-size 5
