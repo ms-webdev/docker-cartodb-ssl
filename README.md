@@ -1,8 +1,48 @@
-test
-## NON SSL (Port 80)
+## TODO
+- Expire + GZIP (assets)
+- Map/Data: wrong host (cartodb.localhost)
+- Install Mailer
+- Log(s!) Monitoring
+
+## Init Instance
 ```bash
-docker run -d -p 80:80 -h <hostname> --name cartodb mswebdev/cartodb
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo apt-get install -y jq
 ```
+## BUILD mswebdev:https-prod-16-04
+```bash
+rm -r docker-cartodb
+git clone -b https-prod-16-04 https://github.com/ms-webdev/docker-cartodb.git
+docker build -t=mswebdev/cartodb docker-cartodb/
+```
+## RUN [!Warning: change Hostname]
+```bash
+docker run -d -p 443:443 -e CARTO_HOSTNAME=cartodb-test.gopwa.de -e HTTPS=1 --name cartodb mswebdev/cartodb
+```
+## Docker CMDs
+```bash
+docker ps -a
+docker logs cartodb
+
+docker exec -it cartodb bash
+docker stop cartodb
+docker rm cartodb
+
+docker system prune -a
+
+docker inspect --format "{{json .State.Health }}" cartodb | jq
+```
+## Logs
+```bash
+nano /cartodb/log/production.log
+nano /var/log/nginx/cartodb_error.log
+
+nano /etc/redis/redis.conf
+service redis-server restart
+```
+
+# --- END ---
 ## OpenSSL 
 ```bash
 docker run -d -p 443:443 -e CARTO_HOSTNAME=<hostname> -e HTTPS=1 --name cartodb mswebdev/cartodb
