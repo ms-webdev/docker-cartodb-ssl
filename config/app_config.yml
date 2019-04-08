@@ -413,7 +413,7 @@ defaults: &defaults
   basemaps: # Adding `default: true` at a basemap marks its group as the default one. Its first basemap becomes the default one.
     CARTO:
       voyager_labels:
-        default: true
+        #default: true
         urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
         urlTemplate2x: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}@2x.png'
         subdomains: 'abcd'
