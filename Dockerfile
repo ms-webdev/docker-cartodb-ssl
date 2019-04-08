@@ -105,8 +105,9 @@ RUN apt-get install -y -q \
     redis-tools \
     nano
 
-# Redis: Docker Fix
+# Redis: change configs
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
+RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
 EXPOSE 80
 
