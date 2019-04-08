@@ -47,4 +47,5 @@ echo 'delete from api_keys' | psql -U postgres -t carto_db_production
 bundle exec rake carto:api_key:create_default
 
 # Run Server
-bundle exec thin start --threaded -p 3000 --threadpool-size 5
+bundle exec rails server
+#bundle exec thin start --threaded -p 3000 --threadpool-size 5
