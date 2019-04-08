@@ -33,7 +33,7 @@ bundle exec  rake cartodb:db:set_user_account_type["${SUBDOMAIN}",'[DEDICATED]']
 
 # Set dataservices server
 echo "--- Set dataservice server"
-bundle exec rake cartodb:services:set_user_provider["${SUBDOMAIN}", geocoder]
+bundle exec rake cartodb:services:set_user_provider["${SUBDOMAIN}", 'geocoder'] --trace
 
 # Enable sync tables
 #echo "UPDATE users SET sync_tables_enabled=true WHERE username='${SUBDOMAIN}'" | psql -U postgres -t carto_db_production
