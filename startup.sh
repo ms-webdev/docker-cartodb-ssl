@@ -42,8 +42,8 @@ fi
 service nginx start
 
 cd /cartodb
-bundle exec rake db:create
-bundle exec rake db:migrate
+#bundle exec rake db:create
+#bundle exec rake db:migrate
 # bundle exec rails server
 bundle exec script/resque > resque.log 2>&1 &
 

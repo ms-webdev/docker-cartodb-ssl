@@ -110,8 +110,10 @@ RUN apt-get install -y -q \
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
-# Create User
+# Init Database & Create Admin
 RUN service postgresql start && service redis-server start && \
+    cd cartodb && \
+    bundle exec rake db:create && bundle exec rake db:migrate && \
     bash -l -c "cd /cartodb && bash script/create_prod_user" && \
     service postgresql stop && service redis-server stop
 
