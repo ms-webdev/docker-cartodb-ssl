@@ -184,7 +184,7 @@ defaults: &defaults
     # secondary:
     #   host: '127.0.0.1'
   org_metadata_api:
-    host: 'localhost.lan'
+    host: 'cartodb.localhost'
     port: '3000'
     username: "extension"
     password: "elephant"
