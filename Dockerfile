@@ -129,7 +129,7 @@ RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 RUN service postgresql start && service redis-server start && \
     cd cartodb && \
     bundle exec rake db:create && bundle exec rake db:migrate && \
-    bash -l -c "cd /cartodb && bash script/create_prod_user && bash script/setup_organization" && \
+    bash -l -c "cd /cartodb && bash script/create_prod_user && bash script/setup_organization.sh" && \
     service postgresql stop && service redis-server stop
 
 EXPOSE 80
