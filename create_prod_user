@@ -32,8 +32,7 @@ echo "--- Setting cartodb account type"
 bundle exec  rake cartodb:db:set_user_account_type["${SUBDOMAIN}",'[DEDICATED]']
 
 # Set dataservices server
-echo "--- Set dataservice server"
-bundle exec  rake cartodb:db:configure_geocoder_extension_for_non_org_users["${SUBDOMAIN}"]
+#ndle exec  rake cartodb:db:configure_geocoder_extension_for_non_org_users["${SUBDOMAIN}"]
 #bundle exec rake cartodb:services:set_user_provider['user-name',geocoder,mapzen]
 
 # Enable sync tables

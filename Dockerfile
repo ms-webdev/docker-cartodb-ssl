@@ -94,7 +94,7 @@ ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environm
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./create_prod_user /cartodb/script/create_prod_user
-# ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
+ADD ./setup_organization.sh /cartodb/script/setup_organization.sh
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
@@ -111,22 +111,25 @@ RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
 # Install dataservices
-RUN git clone https://github.com/CartoDB/dataservices-api.git && \
-    cd dataservices-api && \
-    cd client && make install && \
-    cd - && \
-    cd server/extension && make install
-RUN cd dataservices-api/server/lib/python/cartodb_services && pip install -r requirements.txt && pip install . --upgrade
-RUN service postgresql start && service redis-server start && \
-    psql -U postgres -c "CREATE DATABASE dataservices_db ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" && \
-    psql -U postgres -c "CREATE USER geocoder_api;" && \
-    service postgresql stop && service redis-server stop
+#RUN git clone https://github.com/CartoDB/dataservices-api.git && \
+#    cd dataservices-api && \
+#    cd client && make install && \
+#    cd - && \
+#    cd server/extension && make install
+#RUN cd dataservices-api/server/lib/python/cartodb_services && pip install -r requirements.txt && pip install . --upgrade
+#RUN service postgresql start && service redis-server start && \
+#    psql -U postgres -c "CREATE DATABASE dataservices_db ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" && \
+#    psql -U postgres -c "CREATE USER geocoder_api;" && \
+#    psql -U postgres -d dataservices_db -c "BEGIN;CREATE EXTENSION IF NOT EXISTS plproxy; COMMIT" -e && \
+#    psql -U postgres -d dataservices_db -c "BEGIN;CREATE EXTENSION IF NOT EXISTS cdb_dataservices_server; COMMIT" -e && \
+#    service postgresql stop && service redis-server stop
+
 
 # Init Database & Create Admin
 RUN service postgresql start && service redis-server start && \
     cd cartodb && \
     bundle exec rake db:create && bundle exec rake db:migrate && \
-    bash -l -c "cd /cartodb && bash script/create_prod_user" && \
+    bash -l -c "cd /cartodb && bash script/create_prod_user && bash script/setup_organization" && \
     service postgresql stop && service redis-server stop
 
 EXPOSE 80
