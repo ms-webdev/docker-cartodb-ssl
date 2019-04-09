@@ -109,6 +109,9 @@ RUN apt-get install -y -q \
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
+# Fonts
+RUN apt-get install -y -q fonts-lato
+
 # Fixes
 RUN cp /cartodb/public/favicons/favicon.ico /cartodb/public/
 
