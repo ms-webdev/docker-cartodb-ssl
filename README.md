@@ -1,4 +1,4 @@
-### node
+### note
 EXPERIMENTAL - currently in development
 ## TODO
 - Expire + GZIP (assets)
