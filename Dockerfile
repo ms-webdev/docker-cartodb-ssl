@@ -110,7 +110,6 @@ RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
 # Fonts
-ADD ./fonts/Graduate-Regular.ttf /usr/share/fonts/Graduate-Regular.ttf
 ADD ./fonts /usr/share/fonts/
 RUN apt-get install -y -q \
     ttf-dejavu \
