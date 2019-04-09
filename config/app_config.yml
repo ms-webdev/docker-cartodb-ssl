@@ -226,7 +226,7 @@ defaults: &defaults
       url_ttl: 7200
       async_long_uploads: false
       region: ''
-    uploads_path: 'public/assets/uploads'
+    uploads_path: 'public/uploads'
     pg_dump_bin_path:
       '9.5': 'pg_dump'
       '10': 'pg_dump'
