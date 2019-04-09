@@ -93,7 +93,7 @@ ADD ./config/cartodb-sql-api.production.js /CartoDB-SQL-API/config/environments/
 ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environments/production.js
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
-ADD ./setup_admin.sh /cartodb/script/setup_admin.sh
+ADD ./script/setup_admin.sh /cartodb/script/setup_admin.sh
 ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
 ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
 
