@@ -94,8 +94,8 @@ ADD ./config/cartodb-windschaft.production.js /Windshaft-cartodb/config/environm
 ADD ./config/app_config.yml /cartodb/config/app_config.yml
 ADD ./config/database.yml /cartodb/config/database.yml
 ADD ./script/setup_admin.sh /cartodb/script/setup_admin.sh
-ADD ./config/nginx.http.conf /etc/nginx/sites-enabled/default
-ADD ./config/nginx.https.openssl.conf /etc/nginx/sites-enabled/https
+ADD ./config/nginx/http.conf /etc/nginx/sites-enabled/default
+ADD ./config/nginx/https.openssl.conf /etc/nginx/sites-enabled/https
 
 # Server + Tools
 RUN apt-get install -y -q \
