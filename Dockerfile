@@ -109,6 +109,9 @@ RUN apt-get install -y -q \
 RUN perl -pi.bak -e 's/^bind 127.0.0.1 ::1$/bind 0.0.0.0/' /etc/redis/redis.conf
 RUN perl -pi.bak -e 's/^save /#save /' /etc/redis/redis.conf
 
+# Fixes
+RUN cp /cartodb/public/favicons/favicon.ico /cartodb/public/
+
 # Install dataservices
 #RUN git clone https://github.com/CartoDB/dataservices-api.git && \
 #    cd dataservices-api && \
