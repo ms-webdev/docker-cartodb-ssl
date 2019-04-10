@@ -1,13 +1,16 @@
 ### note
 EXPERIMENTAL - currently in development
 ## TODO
-- Expire + GZIP (assets)
-- Map/Data: wrong host (cartodb.localhost)
+### stable-a01
+- Letsencrypt
+- docker run überarbeiten (parameter + startup.sh)
+- Expire + GZIP (für assets)
+
+### stable-a02
 - Install Mailer
+- add app.yml via run ?
+- init dataservice
 - Log(s!) Monitoring
-- Avatar Upload (chmod?)
-- Add full dataservice support
-- install dismissed Label Fonts 
 
 ## Init Instance
 ```bash
@@ -15,13 +18,14 @@ sudo apt-get update
 sudo apt-get install -y docker.io
 sudo apt-get install -y jq
 ```
-## BUILD mswebdev:https-prod-16-04
+## BUILD mswebdev:master
 ```bash
 rm -r docker-cartodb
-git clone -b https-prod-16-04 https://github.com/ms-webdev/docker-cartodb.git
+git clone -b master https://github.com/ms-webdev/docker-cartodb.git
 docker build -t=mswebdev/cartodb docker-cartodb/
 ```
-## RUN [!Warning: change Hostname]
+## RUN [!change Hostname]
+change hostname
 ```bash
 docker run -d -p 443:443 -e CARTO_HOSTNAME=cartodb-test.gopwa.de -e HTTPS=1 --name cartodb mswebdev/cartodb
 ```
